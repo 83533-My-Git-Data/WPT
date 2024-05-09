@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CartPage</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><div id="divMessage"></div></td>
+            <td><input type="button" value="Logout" onclick="logout()"></td>
+            <!-- <td><button type="button" class="btn btn-danger" onclick="logout()"></button></td> -->
+        </tr>
+    </table>
+
+    <center>
+        <!-- <input type="button" value="Click Me" onclick="GetDataFromServer()" /> -->
+        <table border="1 solid"  style="width: 600px" id="myTable">
+        <tr><td>Srno</td>
+        <td>Image</td>
+        <td>Item</td>
+        <td>Price</td></tr>
+        </table>
+<br><br>
+<hr><hr>
+        <table border="1 solid"  style="width: 600px" id="myTable2"></table>
+      </center>
+    
+
+
+    <script>
+    var count=0;
+    var Vcount=0;
+    var Scount=0;
+        var refToDivMessage = document.getElementById("divMessage");
+        var uname = window.localStorage.getItem("LoginID");
+        var message = `Welcome ${uname}! to MiniCart`;
+  
+        refToDivMessage.innerHTML = `<h1>${message}</h1>`;
+      
+      function logout()
+      {
+       // window.localStorage.setItem("Password", refToPassword.value);
+         window.localStorage.removeItem("LoginID");
+         window.localStorage.removeItem("Password");
+         window.location.href = "Login.HTML";
+ 
+      }
+
+      function GetDataFromServer() {
+        var helper = new XMLHttpRequest(); //readyState = 0
+        debugger
+        helper.onreadystatechange = function () {
+          console.log("ready state channged to " + helper.readyState);
+          //readystate 4 means reply received
+          //status 200 means successfully response received.
+          if (helper.readyState == 4 && helper.status == 200) {
+            var People = JSON.parse(helper.responseText);
+
+            var refToMyTable = document.getElementById("myTable");
+
+            for (let i = 0; i < People.length; i++) {
+              var person = People[i];
+            //   if(People[0].Item=="Vadapav")
+            //   {
+            //     window.localStorage.setItem("Item",People[0].Item);
+            //   }
+            //   if(People[1].Item=="Samosa")
+            //   {
+            //     window.localStorage.setItem("Item",People[1].Item);
+            //   }
+            //   if(People[2].Item=="Kachori")
+            //   {
+            //     window.localStorage.setItem("Item",People[2].Item);
+            //   }
+
+              var row = `<tr>
+                        <td>${person.No}</td>
+                        <td><img src="${person.Image}" style="height:100px; width: 100px"/></td>
+                        <td>${person.Item}</td>
+                        <td>${person.Price}</td>
+                        <td>
+                                  <button onclick="Addcart()">Add to Cart</button>  
+                        </td>
+                       </tr>`;
+              refToMyTable.innerHTML = refToMyTable.innerHTML + row;
+              
+            }
+          }
+        };
+
+       
+
+        helper.open("GET", "data.json");
+        //readyState = 1
+
+        helper.send(); ////readyState = 2
+
+        //waiting for reply ... ////readyState = 3
+        //reply received ...... ////readyState = 4
+      }
+
+      function Addcart()
+      {
+        debugger;
+    
+        
+        var item;
+
+        if(($("#myTable tr:eq(2)").find("td:eq(4)").button())){
+        count=Vcount+1;
+        item="Vadapao";}
+
+        if(($("#myTable tr:eq(2) td:eq(4)"))){
+        count=Scount+1;
+        item="Samosa";}
+
+        if(($("#myTable tr:eq(3)").find("td:eq(4)")))
+        //count=Kcount+1;
+
+
+
+        var refToMyTable2 = document.getElementById("myTable2");
+        var row = `<tr>
+                         <td>${count}</td>
+                          
+
+                        <td>${item}</td>
+                        
+                        <td>${count}</td>
+                       </tr>`;
+              refToMyTable2.innerHTML = refToMyTable2.innerHTML + row;
+              
+
+        
+        
+      }
+
+      //debugger;
+      GetDataFromServer();
+
+      </script>
+    
+</body>
+</html>

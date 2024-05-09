@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CartPage</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+</head>
+<body style="">
+  <div class="container">
+  <div class= "jumbotron"style="background-color: rgb(1, 255, 136);">
+    <table >
+        <tr>
+            <td style="width:95%"><div id="divMessage"></div></td>
+            <td style="position: absolute;
+              right: 16px;
+              top: 16px; width: 6%;">
+            <button type="button" style="" class="btn btn-danger" onclick="logout()">Logout</button></td>
+        </tr>
+    </table>
+  </div>
+
+    <center>
+        
+        <table>
+        <tr>
+          <td style="padding: 158px;" >
+        <!-- <input type="button" value="Click Me" onclick="GetDataFromServer()" /> -->
+        <div class="table-responsive" style="">     
+        <table class= "table table-bordered"   style="width: 500px;border-style:solid;" id="myTable">
+                  <tr>
+                      <td>Srno</td>
+                      <td>Image</td>
+                      <td>Item</td>
+                      <td>Price</td>
+                      <td>Add</td>
+                  </tr>
+              </table>
+          </div>
+          </td>
+          <td></td>
+          <td>
+          <table class="table table-bordered"  style="width: 400px" id="myTable2">
+        
+              <td>Item</td>
+              <td>Quantity</td>
+              <td>Price</td>
+            </table>
+      </tr>
+        
+        </table>
+      
+      </center>
+    
+
+
+    <script>
+    var tcount=0;
+    var count=0;
+    var Vcount=1;
+    var Scount=1;
+    var Kcount=1;
+    var Vflag=0;
+    var Sflag=0;
+    var Kflag=0;
+
+        var refToDivMessage = document.getElementById("divMessage");
+        var uname = window.localStorage.getItem("LoginID");
+        var message = `Welcome ${uname}! to MiniCart`;
+  
+        refToDivMessage.innerHTML = `<h1>${message}</h1>`;
+      
+      function logout()
+      {
+       // window.localStorage.setItem("Password", refToPassword.value);
+         window.localStorage.removeItem("LoginID");
+         window.localStorage.removeItem("Password");
+         window.location.href = "Login.HTML";
+ 
+      }
+
+      
+      $.ajax({
+        url: "data.json",
+          method: "GET",
+          type: "application/json",
+          success: function (reply) {
+            var users = reply;
+            for (let i = 0; i < users.length; i++) {
+              var row = `<tr>
+                        <td>${users[i].No}</td>
+                        <td><img src="${reply[i].Image}" style="height:100px; width: 100px"/></td>
+                        <td>${reply[i].Item}</td>
+                        <td>${reply[i].Price}</td>
+                         <td>
+                                  <button class="btn btn-primary"onclick="Addcart${[i]}()">AddCart</button>  
+                        </td>
+                               </tr>`;
+              $("#myTable").append(row);
+            }
+          },
+          error: function () {
+            alert("something went wrong!");
+          },
+      })
+
+      function Addcart0()
+      {
+        debugger;
+    
+        
+        var item;
+        tcount=tcount+1;       
+        item="Vadapao";
+        price= 20;
+      
+        var refToMyTable2 = document.getElementById("myTable2");
+        if(Vflag==0)
+        {
+          var row = `<tr>
+                       
+                        <td>${item}</td>
+                        <td><h5 id="vq">${Vcount}</h5></td>
+                        <td><h5 id="vp">${price}</h5></td>
+                        <td>
+                              <button class="btn btn-warning"onclick="Remove(event)">Remove</button>  
+                                </td>
+                       </tr>`;
+              refToMyTable2.innerHTML = refToMyTable2.innerHTML + row;
+              Vflag++;
+        }
+        else{
+          //Vcount=1;
+          var quant=document.getElementById("vq");
+          quant.innerText=++Vcount;
+          var pri=document.getElementById("vp");
+          pri.innerText=(price*Vcount);
+          
+        }      
+      }
+
+      function Addcart1()
+      {    
+        var item;
+        tcount=tcount+1;
+        //Scount=Scount+1;
+        item="Samosa";
+        price= 25;
+
+        if(Sflag==0){
+        var refToMyTable2 = document.getElementById("myTable2");
+        var row = `<tr>
+                        <td>${item}</td>
+                        <td><h5 id="sq">${Scount}</h5></td>
+                        <td><h5 id="sp">${price}</h5></td>
+                        <td>
+                                  <button class="btn btn-warning" onclick="Remove(event)">Remove</button>  
+                                </td>
+                        </tr>`;
+              refToMyTable2.innerHTML = refToMyTable2.innerHTML + row;
+              Sflag++;
+          }   
+          else{
+          //Vcount=1;
+          var quant=document.getElementById("sq");
+          quant.innerText=++Scount;
+          var pri=document.getElementById("sp");
+          pri.innerText=(price*Scount);
+          
+        }  
+      }
+
+      function Addcart2()
+      { 
+        var item;
+        tcount=tcount+1;
+       // count=Kcount+1;
+        item="Kachori";
+        price= 30;
+
+        if(Kflag==0){
+        var refToMyTable2 = document.getElementById("myTable2");
+        var row = `<tr>
+                      
+                          
+
+                        <td>${item}</td>
+                        <td><h5 id="kq">${Kcount}</h5></td>
+                        <td><h5 id="kp">${price}</h5></td>
+                        <td>
+                                  <button class="btn btn-warning" onclick="Remove(event)">Remove</button>  
+                                </td>
+                       </tr>`;
+              refToMyTable2.innerHTML = refToMyTable2.innerHTML + row;
+              Kflag++;         
+            }
+          else{
+          //Vcount=1;
+          var quant=document.getElementById("kq");
+          quant.innerText=++Kcount;
+          var pri=document.getElementById("kp");
+          pri.innerText=(price*Kcount);
+          
+        } 
+
+        
+        
+      }
+
+
+      </script>
+    
+
+  </body>
+</html>

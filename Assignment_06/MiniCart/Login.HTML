@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign In</title>
+
+    <style>
+        /* Additional styling */
+        .jumbotron {
+            margin: 0 auto; /* Add space at the top */
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+    <center>
+        <div class="jumbotron" style="background-color: gainsboro">
+                   <h1>Sign In</h1>
+        <table>
+            <tr>
+                <td>Login ID:</td>
+                <td><input type="text" id="txtLogin"></td>
+                <td><div id="errorDiv1" style="color: red;"></div></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="txtPassword"></td>
+                <td><div id="errorDiv2" style="color: red;"></div></td>
+            </tr>
+
+            <tr>
+            </tr>
+             
+        </table>
+    
+        <button class="btn btn-success" onclick="login()">Login</button>
+    </div>
+ 
+    </center>
+
+    
+<script>
+    function login()
+    {
+        debugger;
+        var refToId=document.getElementById("txtLogin");
+        var refToPassword=document.getElementById("txtPassword");
+        var refToErrorDiv1=document.getElementById("errorDiv1");
+        var refToErrorDiv2=document.getElementById("errorDiv2");
+        
+        refToErrorDiv1.innerText="";
+        refToErrorDiv2.innerText="";
+        if(refToId.value=="")
+        {
+            refToErrorDiv1.innerText="Login ID is Required";
+        }
+        else{
+
+        }
+        if(refToPassword.value=="")
+        {
+            refToErrorDiv2.innerText="Password is Required";
+        }
+        
+        if(refToId.value=="Admin" && refToPassword.value=="Admin")
+        {
+            console.log("Inside Login");
+            window.localStorage.setItem("LoginID", refToId.value);
+            window.localStorage.setItem("Password", refToPassword.value);
+        // window.localStorage.removeItem("Key")
+            window.location.href = "Cart.html";
+ 
+            //<a href="Cart.html"></a>
+        }
+        else{
+            alert("Invalid Credentials");
+        }
+    }   
+</script>
+    
+</div>
+</body>
+
+</html>

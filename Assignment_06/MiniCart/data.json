@@ -1,0 +1,20 @@
+[
+    {
+        "No": 1,
+        "Image": "vadapao.jpeg",
+        "Item": "Vadapav",
+        "Price": 20
+    },
+    {
+        "No": 2,
+        "Image": "samosa.jpeg",
+        "Item": "Samosa",
+        "Price": 25
+    },
+    {
+        "No": 3,
+        "Image": "kachori.jpeg",
+        "Item": "Kachori",
+        "Price": 30
+    }
+]
